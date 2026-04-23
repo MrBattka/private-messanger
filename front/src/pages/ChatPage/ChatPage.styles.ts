@@ -73,8 +73,16 @@ export const ButtonLogout = styled(Button)`
 `;
 
 export const PlugSelectChat = styled.p`
+  flex: 1;
+  margin: 0;
   height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, rgb(255, 255, 255) 0%, #e4d3f8 100%);
+  font-size: 24px;
+  letter-spacing: 1px;
+  color: #7a6a8b;
 `;

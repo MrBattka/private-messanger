@@ -115,8 +115,7 @@ const ChatPage: React.FC = () => {
           <UserMiniAvatar />
           <ChatListTemp />
         </Sidebar>
-        <ChatContainer>
-          {selectedChatId ? <div>
+        {selectedChatId ? <ChatContainer>
           <MessageList>
             {messages.filter(msg => msg.chatId === selectedChatId).map((msg) => (
               <Message
@@ -137,8 +136,8 @@ const ChatPage: React.FC = () => {
             />
             <SendButton onClick={handleSend}>Отправить</SendButton>
           </InputContainer>
-          </div> : <PlugSelectChat>Select a chat from the list</PlugSelectChat>}
-        </ChatContainer>
+        </ChatContainer> :
+        <PlugSelectChat><span>🤫 Welcome in secret messenger 🤐</span></PlugSelectChat>}
       </FlexContainer>
     </ErrorBoundary>
   );

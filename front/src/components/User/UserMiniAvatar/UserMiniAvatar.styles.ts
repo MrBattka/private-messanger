@@ -12,13 +12,14 @@ export const UserMiniAvatarContainer = styled.div<{ onKeyPress?: (e: React.Keybo
 `;
 
 export const Avatar = styled.img<{ $isOpen: boolean }>`
-  /* width: 50px;
-  height: 50px; */
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  object-fit: cover;
   cursor: pointer;
   border: 2px solid ${props => (props.$isOpen ? '#007bff' : 'transparent')};
   transition: border 0.2s ease;
+  object-fit: cover; /* Обрезает изображение, чтобы заполнить контейнер */
+  object-position: center; /* Центрирует изображение */
 `;
 
 export const Label = styled.img`
