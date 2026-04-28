@@ -47,10 +47,37 @@ export default function chatRoutes(io: SocketIOServer) {
     try {
       const messages = await prisma.message.findMany({
         where: { chatId: parseInt(req.params.chatId) },
-        include: { user: true },
+        include: {
+          user: true,
+          replyTo: {
+            include: {
+              user: true, // ← обязательно, чтобы был username
+            },
+          },
+        },
         orderBy: { createdAt: 'asc' },
       });
-      res.json(messages);
+
+      // Форматируем ответ
+      const formatted = messages.map((msg) => ({
+        id: msg.id,
+        content: msg.content,
+        userId: msg.userId,
+        chatId: msg.chatId,
+        createdAt: msg.createdAt,
+        user: {
+          username: msg.user.username,
+        },
+        replyTo: msg.replyTo && msg.replyTo.user
+          ? {
+            sender: msg.replyTo.user.username,
+            content: msg.replyTo.content,
+          }
+          : null,
+          replyToId: msg.replyToId,
+      }));
+
+      res.json(formatted);
     } catch (error) {
       res.status(500).json({ error: 'Ошибка при получении сообщений' });
     }
@@ -61,19 +88,34 @@ export default function chatRoutes(io: SocketIOServer) {
     try {
       const { userId1, userId2 } = req.body;
 
-      // Проверяем, не существует ли уже такой чат
+      // Валидация входных данных
+      if (!userId1 || !userId2 || isNaN(userId1) || isNaN(userId2)) {
+        return res.status(400).json({ error: 'Invalid user IDs' });
+      }
+
+      // Проверяем, существует ли уже приватный чат между ними
       const existingChat = await prisma.chat.findFirst({
         where: {
           isGroup: false,
-          members: {
-            every: {
-              userId: { in: [userId1, userId2] },
+          AND: [
+            {
+              members: {
+                some: { userId: userId1 },
+              },
             },
-          },
+            {
+              members: {
+                some: { userId: userId2 },
+              },
+            },
+          ],
+        },
+        include: {
+          members: true,
         },
       });
 
-      if (existingChat) {
+      if (existingChat && existingChat.members.length === 2) {
         return res.json(existingChat);
       }
 
@@ -90,8 +132,10 @@ export default function chatRoutes(io: SocketIOServer) {
         },
         include: { members: { include: { user: true } } },
       });
+
       res.json(chat);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: 'Ошибка при создании чата' });
     }
   });

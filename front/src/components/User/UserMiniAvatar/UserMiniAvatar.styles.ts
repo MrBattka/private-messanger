@@ -25,6 +25,7 @@ export const Avatar = styled.img<{ $isOpen: boolean }>`
 export const Label = styled.img`
   max-width: 40px;
   max-height: 40px;
+  border-radius: 30%;
 `;
 
 export const DropdownMenu = styled.div`

@@ -1,14 +1,21 @@
 import { create } from 'zustand';
 import io, { Socket } from 'socket.io-client';
 
-interface ChatMessage {
-  id: number;
+export interface ReplyTo {
+  sender: string;
+  content: string;
+}
+export interface ChatMessage {
+  id: string;
   content: string;
   sender: string;
   timestamp: string;
   isOwn: boolean;
   chatId: number;
   userId: number;
+  serverId?: string;
+  replyTo?: ReplyTo | null;
+  replyToId?: number | null;
 }
 
 interface Chat {
@@ -36,13 +43,7 @@ interface ChatState {
   currentUserId: number | null;
   isInitialized: boolean;
   initSocket: (userId: number) => void;
-  addMessage: (message: {
-    content: string;
-    sender: string;
-    chatId: number;
-    userId: number;
-    isOwn: boolean;
-  }) => void;
+  addMessage: (message: ChatMessage) => void;
   receiveMessage: (message: any) => void;
   loadChats: (userId: number) => Promise<void>;
   loadMessages: (chatId: number) => Promise<void>;
@@ -124,13 +125,15 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
       const currentUserId = get().currentUserId;
       const formattedMessages = messages.map((msg: any) => ({
-        id: msg.id,
+        id: String(msg.id),
         content: msg.content,
         sender: msg.user.username,
-        timestamp: new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        timestamp: msg.createdAt, // ← сохраняем ISO строку, НЕ форматируем!
         isOwn: msg.userId === currentUserId,
         chatId: msg.chatId,
         userId: msg.userId,
+        replyTo: msg.replyTo || null,
+        replyToId: msg.replyToId || null,
       }));
 
       set((state) => ({
@@ -156,32 +159,42 @@ export const useChatStore = create<ChatState>((set, get) => ({
     }
   },
 
-  addMessage: (message) => {
+  addMessage: (message: ChatMessage) => {
     const { socket, currentUserId } = get();
-
     if (socket && currentUserId) {
       socket.emit('send_message', {
         chatId: message.chatId,
         userId: currentUserId,
         content: message.content,
+        replyToId: message.replyToId || null,
       });
     }
   },
 
   receiveMessage: (message: any) => {
-    const { selectedChatId } = get();
+    const { selectedChatId, messages } = get();
     const isCurrentChat = message.chatId === selectedChatId;
+    const tempMessageIndex = messages.findIndex(m => m.id === message.id && !m.serverId);
 
     const newMessage: ChatMessage = {
-      id: message.id,
+      id: String(message.id),
       content: message.content,
       sender: message.user.username,
-      timestamp: new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: message.createdAt,
       isOwn: message.userId === get().currentUserId,
       chatId: message.chatId,
       userId: message.userId,
+      replyTo: message.replyTo || null,
+      replyToId: message.replyToId || null,
     };
-
+  if (tempMessageIndex > -1) {
+    // Заменяем временное сообщение
+    set((state) => ({
+      messages: state.messages.map(m =>
+        m.id === message.id ? newMessage : m
+      )
+    }));
+  } else {
     set((state) => ({
       messages: [...state.messages, newMessage],
       chats: state.chats.map((chat) =>
@@ -189,12 +202,13 @@ export const useChatStore = create<ChatState>((set, get) => ({
           ? {
             ...chat,
             lastMessage: message.content,
-            time: newMessage.timestamp,
+            time: new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             unreadCount: isCurrentChat ? 0 : chat.unreadCount + 1,
           }
           : chat
       ),
     }));
+  }
   },
 
   clearMessages: () => set({ messages: [] }),

@@ -50,17 +50,55 @@ io.on('connection', (socket) => {
     console.log(`Пользователь ${userId} присоединился к чату ${chatId}`);
   });
 
-  socket.on('send_message', async (data: { chatId: number; userId: number; content: string }) => {
-    const message = await prisma.message.create({
-      data: {
-        content: data.content,
-        userId: data.userId,
-        chatId: data.chatId,
-      },
-      include: { user: true },
-    });
+  socket.on('send_message', async (data: {
+    chatId: number;
+    userId: number;
+    content: string;
+    replyToId?: number | null;
+  }) => {
+    try {
+      const message = await prisma.message.create({
+        data: {
+          content: data.content,
+          userId: data.userId,
+          chatId: data.chatId,
+          replyToId: data.replyToId || null, // ← добавляем ссылку
+        },
+        include: {
+          user: true,
+          replyTo: {
+            include: {
+              user: true, // чтобы получить username автора цитаты
+            },
+          },
+        },
+      });
 
-    io.to(`chat_${data.chatId}`).emit('receive_message', message);
+      // Форматируем сообщение для фронтенда
+      const formattedMessage = {
+        id: message.id,
+        content: message.content,
+        userId: message.userId,
+        chatId: message.chatId,
+        createdAt: message.createdAt,
+        user: {
+          username: message.user.username,
+        },
+        replyTo: message.replyTo
+          ? {
+            sender: message.replyTo.user.username,
+            content: message.replyTo.content,
+          }
+          : null,
+          replyToId: message.replyToId,
+      };
+
+      // Отправляем всем в чате
+      io.to(`chat_${data.chatId}`).emit('receive_message', formattedMessage);
+    } catch (err) {
+      console.error('Ошибка при отправке сообщения:', err);
+      socket.emit('error', { message: 'Не удалось отправить сообщение' });
+    }
   });
 
   socket.on('disconnect', () => {

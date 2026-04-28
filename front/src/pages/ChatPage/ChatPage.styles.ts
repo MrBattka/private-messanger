@@ -14,7 +14,7 @@ export const FlexContainer = styled.div`
 `;
 
 export const Sidebar = styled.div`
-  width: 280px;
+  width: 270px;
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-right: 1px solid rgba(255, 255, 255, 0.2);
@@ -28,7 +28,8 @@ export const ChatContainer = styled.div`
   flex-direction: column;
   background-color: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(10px);
-  overflow: hidden;
+  position: relative; /* для абсолютной кнопки */
+  min-height: 0;
 `;
 
 export const MessageList = styled.div`
@@ -39,15 +40,8 @@ export const MessageList = styled.div`
   flex-direction: column;
   gap: 10px;
   background: linear-gradient(to bottom, #f8f9ff 0%, #f0f2ff 100%);
-`;
-
-export const InputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(5px);
+  min-height: 0;
+  scroll-behavior: auto;
 `;
 
 export const SendButton = styled(Button)`
@@ -85,4 +79,46 @@ export const PlugSelectChat = styled.p`
   font-size: 24px;
   letter-spacing: 1px;
   color: #7a6a8b;
+`;
+
+export const PlugNoMessage = styled.p`
+  flex: 1;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: #7a6a8b;
+`;
+
+
+interface ScrollToBottomButtonProps {
+  $visible: boolean;
+  $replyActive?: boolean; // ← новое свойство
+}
+
+export const ScrollToBottomButton = styled.button<ScrollToBottomButtonProps>`
+  position: absolute;
+  bottom: ${({ $replyActive }) => ($replyActive ? '130px' : '80px')}; /* ↑ поднимаем при активной цитате */
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(100, 100, 200, 0.9);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  pointer-events: ${({ $visible }) => ($visible ? 'auto' : 'none')};
 `;

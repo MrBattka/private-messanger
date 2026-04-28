@@ -41,11 +41,14 @@ model ChatMember {
 }
 
 model Message {
-  id        Int      @id @default(autoincrement())
-  content   String
-  userId    Int
-  chatId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
+  id         Int       @id @default(autoincrement())
+  content    String
+  userId     Int
+  chatId     Int
+  replyToId  Int?      // ← новое поле: ссылка на другое сообщение
+  user       User      @relation(fields: [userId], references: [id])
+  chat       Chat      @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  replyTo    Message?  @relation("MessageReply", fields: [replyToId], references: [id]) // ← отношение к себе
+  replies    Message[] @relation("MessageReply") // обратная связь: ответы на это сообщение
+  createdAt  DateTime  @default(now())
 }

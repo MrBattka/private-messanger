@@ -1,145 +1,139 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ChatInput from '../../components/ChatInput/ChatInput';
+import ChatInputForm from '../../components/ChatInputForm/ChatInputForm';
 import ChatListTemp from '../../components/ChatListTemp/ChatListTemp';
 import Message from '../../components/Message/Message';
+import UserMiniAvatar from '../../components/User/UserMiniAvatar/UserMiniAvatar';
+import { useChatInitialization } from '../../hooks/useChatInitialization';
+import { useChatMessages } from '../../hooks/useChatMessages';
+import { useScrollManagement } from '../../hooks/useScrollManagement';
+import { useReplyManagement } from '../../hooks/useReplyManagement';
 import { useAuthStore } from '../../store/AuthStore';
 import { useChatStore } from '../../store/chatStore';
-import { ChatContainer, FlexContainer, InputContainer, MessageList, PlugSelectChat, SendButton, Sidebar } from './ChatPage.styles';
-import UserMiniAvatar from '../../components/User/UserMiniAvatar/UserMiniAvatar';
-
-// Простой Error Boundary
-class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  constructor(props: { children: React.ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(_: Error) {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Error in ChatPage:', error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <h1>Что-то пошло не так. Попробуйте перезагрузить страницу.</h1>;
-    }
-
-    return this.props.children;
-  }
-}
+import { ChatContainer, FlexContainer, MessageList, PlugNoMessage, PlugSelectChat, ScrollToBottomButton, Sidebar } from './ChatPage.styles';
 
 const ChatPage: React.FC = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [hasInitialized, setHasInitialized] = useState(false);
-  
-  const user = useAuthStore((state) => state.user);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  
-  const selectedChatId = useChatStore((state) => state.selectedChatId);
-  const addMessage = useChatStore((state) => state.addMessage);
-  const initSocket = useChatStore((state) => state.initSocket);
-  const loadChats = useChatStore((state) => state.loadChats);
-  const loadUsers = useChatStore((state) => state.loadUsers);
-  const loadMessages = useChatStore((state) => state.loadMessages); // <-- добавляем
-  const messages = useChatStore((state) => state.messages);
-  const socket = useChatStore((state) => state.socket);
-  
   const navigate = useNavigate();
-  const hasNavigatedRef = useRef(false);
+  const { isAuthenticated, user } = useAuthStore(); // ← Получаем user здесь
+  const { selectedChatId, addMessage, messages } = useChatStore();
 
-  const memoizedUser = useMemo(() => user, [user?.id, user?.username, user?.email, user?.avatarUrl]);
+  const messageRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // Инициализация: загрузка чатов, пользователей и т.д.
-  useEffect(() => {
-    if (hasInitialized) return;
+  const { messageListRef, showScrollDown, scrollToBottom } = useScrollManagement(messages, selectedChatId);
+  const { replyTo, replyToId, setReplyTo, setReplyToId, handleReplyClick, onClearReply } = useReplyManagement();
 
-    if (!isAuthenticated || !memoizedUser || !memoizedUser.id) {
-      if (!hasNavigatedRef.current) {
-        hasNavigatedRef.current = true;
-        navigate('/login');
-      }
+  useChatInitialization();
+  useChatMessages(selectedChatId);
+
+  const handleQuoteClick = (quotedMessageId: string | number) => {
+    const targetId = String(quotedMessageId);
+    const originalMsg = messages.find(m => m.id === targetId);
+    if (!originalMsg) {
+      console.warn(`Message with id ${targetId} not found`);
       return;
     }
 
-    const userId = typeof memoizedUser.id === 'number' ? memoizedUser.id : parseInt(memoizedUser.id, 10);
-
-    initSocket(userId);
-    loadChats(userId);
-    loadUsers();
-    setHasInitialized(true);
-  }, [hasInitialized, isAuthenticated, memoizedUser]);
-
-  // 🔥 Загрузка сообщений при выборе чата
-  useEffect(() => {
-    if (selectedChatId) {
-      loadMessages(selectedChatId); // <-- Вот она — загрузка истории
+    const element = messageRefs.current[targetId];
+    if (!element) {
+      console.warn(`Ref not found for message ${targetId}`);
+      return;
     }
-  }, [selectedChatId, loadMessages]);
 
-  // Присоединение к чату через сокет
-  useEffect(() => {
-    if (selectedChatId && socket && memoizedUser && memoizedUser.id) {
-      const userId = typeof memoizedUser.id === 'string' ? parseInt(memoizedUser.id) : memoizedUser.id;
-      socket.emit('join_chat', selectedChatId, userId);
-    }
-  }, [selectedChatId, socket, memoizedUser]);
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    element.style.transition = 'background-color 1s ease-out';
+    element.style.backgroundColor = originalMsg.isOwn ? '#0056b3' : '#d1ecf1';
 
-  const handleSend = () => {
-    if (!inputValue.trim() || !selectedChatId || !memoizedUser || !memoizedUser.id) return;
-
-    const userId = typeof memoizedUser.id === 'string' ? parseInt(memoizedUser.id) : memoizedUser.id;
-
-    addMessage({
-      content: inputValue,
-      sender: memoizedUser.username || 'Вы',
-      chatId: selectedChatId,
-      userId: userId,
-      isOwn: true,
-    });
-
-    setInputValue('');
+    setTimeout(() => {
+      element.style.backgroundColor = '';
+    }, 1000);
   };
 
-  if (!isAuthenticated || !memoizedUser) {
+  const handleSendMessage = useCallback((content: string) => {
+    if (!selectedChatId || !user) return;
+
+    addMessage({
+      id: Date.now().toString(),
+      content,
+      sender: user.username || 'Вы',
+      chatId: selectedChatId,
+      userId: Number(user.id),
+      isOwn: true,
+      timestamp: new Date().toISOString(),
+      replyToId: replyToId || null,
+    });
+
+    setReplyTo(null);
+    setReplyToId(null);
+  }, [selectedChatId, user, addMessage, replyToId, setReplyTo, setReplyToId]);
+
+  if (!isAuthenticated) {
+    navigate('/login');
     return null;
   }
 
   return (
-    <ErrorBoundary>
-      <FlexContainer>
-        <Sidebar>
-          <UserMiniAvatar />
-          <ChatListTemp />
-        </Sidebar>
-        {selectedChatId ? <ChatContainer>
-          <MessageList>
-            {messages.filter(msg => msg.chatId === selectedChatId).map((msg) => (
-              <Message
-                key={msg.id}
-                text={msg.content}
-                sender={msg.sender}
-                timestamp={msg.timestamp}
-                isOwn={msg.isOwn}
-              />
-            ))}
-          </MessageList>
-          <InputContainer>
-            <ChatInput
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Напишите сообщение..."
-              onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+    <FlexContainer>
+      <Sidebar>
+        <UserMiniAvatar />
+        <ChatListTemp />
+      </Sidebar>
+
+      {selectedChatId ? (
+  <ChatContainer>
+    <MessageList
+      ref={messageListRef}
+      key={selectedChatId}
+      role="log"
+      aria-live="polite"
+    >
+      {messages.filter((msg) => msg.chatId === selectedChatId).length > 0 ? (
+        messages
+          .filter((msg) => msg.chatId === selectedChatId)
+          .map((msg) => (
+            <Message
+              key={msg.id}
+              content={msg.content}
+              sender={msg.sender}
+              timestamp={msg.timestamp}
+              isOwn={msg.isOwn}
+              replyTo={msg.replyTo}
+              replyToId={msg.replyToId}
+              onReply={() => handleReplyClick(msg)}
+              messageId={msg.id}
+              onQuoteClick={handleQuoteClick}
+              ref={(el) => {
+                messageRefs.current[msg.id] = el;
+              }}
             />
-            <SendButton onClick={handleSend}>Отправить</SendButton>
-          </InputContainer>
-        </ChatContainer> :
-        <PlugSelectChat><span>🤫 Welcome in secret messenger 🤐</span></PlugSelectChat>}
-      </FlexContainer>
-    </ErrorBoundary>
+          ))
+      ) : (
+        <PlugNoMessage>
+          <span>Здесь пока нету сообщений</span>
+        </PlugNoMessage>
+      )}
+    </MessageList>
+    {showScrollDown && (
+      <ScrollToBottomButton
+        $visible={showScrollDown}
+        $replyActive={!!replyTo} // ← добавь эту строку
+        onClick={scrollToBottom}
+        aria-label="Scroll to latest messages"
+      >
+        🡻
+      </ScrollToBottomButton>
+    )}
+    <ChatInputForm
+      onSendMessage={handleSendMessage}
+      replyTo={replyTo}
+      onClearReply={onClearReply}
+    />
+  </ChatContainer>
+) : (
+  <PlugSelectChat>
+    <span>🤫 Welcome in secret messenger 🤐</span>
+  </PlugSelectChat>
+)}
+    </FlexContainer>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import LoginPage from './pages/AuthPage/LoginPage';
-import RegisterPage from './pages/AuthPage/RegisterPage';
+import LoginPage from './pages/AuthPage/LoginPage/LoginPage';
+import RegisterPage from './pages/AuthPage/RegisterPage/RegisterPage';
 import ChatPage from './pages/ChatPage/ChatPage';
 import styled from 'styled-components';
 
