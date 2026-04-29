@@ -86,10 +86,10 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
         <ArrowIcon onClick={handleArrowClick}>→</ArrowIcon>
 
         {replyTo && (
-              <ReplyBlock isOwn={isOwn} onClick={handleQuoteClick} style={{ cursor: 'pointer' }}>
-                <ReplySender>→ {replyTo.sender}</ReplySender>
-                <ReplyText>{replyTo.content}</ReplyText>
-              </ReplyBlock>
+          <ReplyBlock isOwn={isOwn} onClick={handleQuoteClick} style={{ cursor: 'pointer' }}>
+            <ReplySender>→ {replyTo.sender}</ReplySender>
+            <ReplyText>{replyTo.content}</ReplyText>
+          </ReplyBlock>
         )}
 
         <MessageText>{content}</MessageText>

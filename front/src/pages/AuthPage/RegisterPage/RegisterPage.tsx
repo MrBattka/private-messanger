@@ -1,7 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthInput from '../../../components/AuthInput/AuthInput';
+import Preloader from '../../../components/Preloader/Preloader';
 import { useRegisterForm } from '../../../hooks/useRegisterForm';
+import { useAuthStore } from '../../../store/AuthStore';
 import { ErrorMessage, LinkText, RegisterContainer, RegisterForm, SubmitButton, Title } from './RegisterPage.styles';
 
 const RegisterPage: React.FC = () => {
@@ -15,6 +17,32 @@ const RegisterPage: React.FC = () => {
     isLoading,
     authError,
   } = useRegisterForm();
+
+  const { isAuthenticated, isInitialized } = useAuthStore();
+  const navigate = useNavigate()
+  
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/chat');
+    }
+  }, [isAuthenticated, navigate])
+
+    if (!isInitialized) {
+      return (
+        <RegisterContainer>
+          <Preloader />
+        </RegisterContainer>
+      );
+    }
+  
+    if (isAuthenticated) {
+      return (
+        <RegisterContainer>
+          <Preloader />
+        </RegisterContainer>
+      );
+    }
 
   return (
     <RegisterContainer>

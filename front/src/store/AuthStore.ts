@@ -11,6 +11,7 @@ interface User {
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
+  isInitialized: boolean;
   isLoading: boolean;
   error: string | null;
 
@@ -18,7 +19,8 @@ interface AuthState {
   register: (username: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
   clearError: () => void;
-  setUser: (user: User) => void; // Добавлено для обновления аватара
+  setUser: (user: User) => void;
+  initialize: () => void;
 }
 
 const API_BASE = 'http://localhost:3001/api/auth';
@@ -30,6 +32,7 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       isLoading: false,
       error: null,
+      isInitialized: false,
 
       login: async (email: string, password: string) => {
         set({ isLoading: true, error: null });
@@ -93,6 +96,7 @@ export const useAuthStore = create<AuthState>()(
       setUser: (user: User) => {
         set({ user }); // Добавлено для обновления аватара
       },
+      initialize: () => set({ isInitialized: true }),
     }),
     {
       name: 'auth-storage',
@@ -100,6 +104,13 @@ export const useAuthStore = create<AuthState>()(
         user: state.user,
         isAuthenticated: state.isAuthenticated,
       }),
+      onRehydrateStorage: () => (state, error) => {
+        if (error) {
+          console.error('Ошибка при восстановлении состояния:', error);
+        }
+        // После восстановления вызываем initialize
+        state?.initialize();
+      },
     }
   )
 );

@@ -42,6 +42,7 @@ interface ChatState {
   socket: Socket | null;
   currentUserId: number | null;
   isInitialized: boolean;
+  isLoadingMessages: boolean;
   initSocket: (userId: number) => void;
   addMessage: (message: ChatMessage) => void;
   receiveMessage: (message: any) => void;
@@ -62,11 +63,11 @@ export const useChatStore = create<ChatState>((set, get) => ({
   socket: null,
   currentUserId: null,
   isInitialized: false,
+  isLoadingMessages: false,
 
   initSocket: (userId: number) => {
     const { socket: existingSocket, isInitialized } = get();
 
-    // Не инициализируем повторно
     if (isInitialized && existingSocket) {
       return;
     }
@@ -119,6 +120,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
     }
   },
   loadMessages: async (chatId: number) => {
+    set({ isLoadingMessages: true }); // ← начало загрузки
     try {
       const response = await fetch(`http://localhost:3001/api/chat/${chatId}/messages`);
       const messages = await response.json();
@@ -128,7 +130,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
         id: String(msg.id),
         content: msg.content,
         sender: msg.user.username,
-        timestamp: msg.createdAt, // ← сохраняем ISO строку, НЕ форматируем!
+        timestamp: msg.createdAt,
         isOwn: msg.userId === currentUserId,
         chatId: msg.chatId,
         userId: msg.userId,
@@ -138,14 +140,14 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
       set((state) => ({
         messages: [
-          // Сохраняем сообщения из других чатов
           ...state.messages.filter((msg) => msg.chatId !== chatId),
-          // Добавляем новые из текущего чата
           ...formattedMessages
         ]
       }));
     } catch (error) {
       console.error('Ошибка загрузки сообщений:', error);
+    } finally {
+      set({ isLoadingMessages: false }); // ← завершение загрузки
     }
   },
 
