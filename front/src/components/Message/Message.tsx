@@ -1,4 +1,5 @@
 import React, { useState, useRef, forwardRef } from 'react';
+import DOMPurify from 'dompurify';
 import { createPortal } from 'react-dom';
 import {
   MessageContainer,
@@ -49,6 +50,13 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
     const [showMenu, setShowMenu] = useState(false);
     const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
+    // 🔒 Санитизируем контент перед отображением
+    const cleanContent = DOMPurify.sanitize(content, {
+      ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p', 'br'],
+      FORBID_TAGS: ['script', 'img', 'iframe', 'object', 'embed'],
+      FORBID_ATTR: ['onerror', 'onload', 'onclick', 'src', 'href', 'background'],
+    });
+
     const handleArrowClick = (e: React.MouseEvent) => {
       e.stopPropagation();
       const rect = (e.target as HTMLElement).getBoundingClientRect();
@@ -65,17 +73,16 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
       closeMenu();
     };
 
-  const handleQuoteClick = () => {
-    console.log('Клик по цитате:', { replyTo, replyToId, onQuoteClick })
-    if (replyTo && onQuoteClick && replyToId != null) {
-      onQuoteClick(String(replyToId));
-    }
-  };
+    const handleQuoteClick = () => {
+      if (replyTo && onQuoteClick && replyToId != null) {
+        onQuoteClick(String(replyToId));
+      }
+    };
 
     return (
       <MessageContainer
-        ref={ref} // присваиваем ref
-        isOwn={isOwn}
+        ref={ref}
+        $isOwn={isOwn}
         onDoubleClick={(e) => {
           e.preventDefault();
           onReply?.();
@@ -86,13 +93,20 @@ const Message = forwardRef<HTMLDivElement, MessageProps>(
         <ArrowIcon onClick={handleArrowClick}>→</ArrowIcon>
 
         {replyTo && (
-          <ReplyBlock isOwn={isOwn} onClick={handleQuoteClick} style={{ cursor: 'pointer' }}>
+          <ReplyBlock $isOwn={isOwn} onClick={handleQuoteClick} style={{ cursor: 'pointer' }}>
             <ReplySender>→ {replyTo.sender}</ReplySender>
             <ReplyText>{replyTo.content}</ReplyText>
           </ReplyBlock>
         )}
 
-        <MessageText>{content}</MessageText>
+        <MessageText>
+          {content.split('\n').map((line, i) => (
+            <React.Fragment key={i}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+        </MessageText>
 
         <MessageMeta>
           {sender}, {new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

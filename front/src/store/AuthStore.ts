@@ -45,8 +45,16 @@ export const useAuthStore = create<AuthState>()(
           const data = await res.json();
           if (!res.ok) throw new Error(data.error || 'Login failed');
 
+          // 🔴 Ключевое: сервер ДОЛЖЕН вернуть токен!
+          if (!data.token) {
+            throw new Error('Сервер не вернул токен');
+          }
+
+          // Сохраняем токен в localStorage
+          localStorage.setItem('token', data.token);
+
           set({
-            user: { id: data.id, username: data.username, email: data.email }, // Исправлено
+            user: { id: data.id, username: data.username, email: data.email },
             isAuthenticated: true,
           });
         } catch (err: unknown) {

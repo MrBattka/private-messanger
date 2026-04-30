@@ -1,4 +1,5 @@
 import 'styled-components';
+import { ThemeType } from './theme';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
@@ -12,4 +13,5 @@ declare module 'styled-components' {
     spacing: (factor: number) => string;
     borderRadius: string;
   }
+  export interface DefaultTheme extends ThemeType {}
 }

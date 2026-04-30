@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface MessageContainerProps {
-  isOwn: boolean;
+  $isOwn: boolean;
 }
 
 export const MessageContainer = styled.div<MessageContainerProps>`
@@ -10,9 +10,9 @@ export const MessageContainer = styled.div<MessageContainerProps>`
   margin: 8px 0;
   padding: 10px 32px 10px 15px;
   border-radius: 18px;
-  background-color: ${props => props.isOwn ? '#007bff' : '#f1f1f1'};
-  color: ${props => props.isOwn ? 'white' : 'black'};
-  align-self: ${props => props.isOwn ? 'flex-end' : 'flex-start'};
+  background-color: ${props => props.$isOwn ? '#007bff' : '#f1f1f1'};
+  color: ${props => props.$isOwn ? 'white' : 'black'};
+  align-self: ${props => props.$isOwn ? 'flex-end' : 'flex-start'};
   text-align: left;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -36,11 +36,11 @@ export const MessageMeta = styled.small`
 `;
 
 /* Стили для цитирования (ответ на сообщение) */
-export const ReplyBlock = styled.div<{ isOwn: boolean }>`
+export const ReplyBlock = styled.div<MessageContainerProps>`
   padding: 6px 10px;
   margin-bottom: 8px;
-  border-left: 3px solid ${props => (props.isOwn ? '#0056b3' : '#adb5bd')};
-  background-color: ${props => (props.isOwn ? 'rgba(0, 123, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)')};
+  border-left: 3px solid ${props => (props.$isOwn ? '#0056b3' : '#adb5bd')};
+  background-color: ${props => (props.$isOwn ? 'rgba(0, 123, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)')};
   border-radius: 0 8px 8px 0;
   font-size: 0.9em;
   color: #495057;

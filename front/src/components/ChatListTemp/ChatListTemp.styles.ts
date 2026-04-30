@@ -14,19 +14,19 @@ export const Title = styled.h4`
   color: #333;
 `;
 
-export const ChatItem = styled.div<{ isSelected: boolean }>`
+export const ChatItem = styled.div<{ $isSelected: boolean }>`
   display: flex;
   align-items: center;
   padding: 8px;
   margin-bottom: 5px;
-  background-color: ${({ isSelected }) => (isSelected ? '#e0f0ff' : '#f0f0f0')};
+  background-color: ${({ $isSelected }) => ($isSelected ? '#e0f0ff' : '#f0f0f0')};
   border-radius: 6px;
   cursor: pointer;
-  border-left: 3px solid ${({ isSelected }) => (isSelected ? '#007bff' : 'transparent')};
+  border-left: 3px solid ${({ $isSelected }) => ($isSelected ? '#007bff' : 'transparent')};
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: ${({ isSelected }) => (isSelected ? '#d0e8ff' : '#e0e0e0')};
+    background-color: ${({ $isSelected }) => ($isSelected ? '#d0e8ff' : '#e0e0e0')};
   }
 `;
 

@@ -8,7 +8,7 @@ const ChatListTemp = () => {
     <ChatListContainer>
       <Title>Чаты</Title>
       {chats.map((chat) => (
-        <ChatItem key={chat.id} isSelected={selectedChatId === chat.id} onClick={() => selectChat(chat.id)}>
+        <ChatItem key={chat.id} $isSelected={selectedChatId === chat.id} onClick={() => selectChat(chat.id)}>
           <Avatar>
             {chat.name.charAt(0).toUpperCase()}
             {chat.isOnline && <OnlineIndicator />}

@@ -12,6 +12,8 @@ import { useScrollManagement } from '../../hooks/useScrollManagement';
 import { useAuthStore } from '../../store/AuthStore';
 import { useChatStore } from '../../store/chatStore';
 import { ChatContainer, FlexContainer, MessageList, PlugNoMessage, PlugSelectChat, ScrollToBottomButton, Sidebar } from './ChatPage.styles';
+import Setting from '../../components/Setting/Setting';
+import { useSettingStore } from '../../store/SettingStore';
 
 const ChatPage: React.FC = () => {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const ChatPage: React.FC = () => {
   const handleQuoteClick = (quotedMessageId: string | number) => {
     const targetId = String(quotedMessageId);
     const originalMsg = messages.find(m => m.id === targetId);
+
     if (!originalMsg) return;
 
     const element = messageRefs.current[targetId];
@@ -41,6 +44,10 @@ const ChatPage: React.FC = () => {
       element.style.backgroundColor = '';
     }, 1000);
   };
+
+  const { isOpen } = useSettingStore()
+  console.log(isOpen);
+  
 
   const handleSendMessage = useCallback((content: string) => {
     if (!selectedChatId || !user) return;
@@ -79,6 +86,7 @@ const ChatPage: React.FC = () => {
         <UserMiniAvatar />
         <ChatListTemp />
       </Sidebar>
+      {isOpen && <Setting />}
 
       {selectedChatId ? (
         <ChatContainer>

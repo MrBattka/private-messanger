@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import io, { Socket } from 'socket.io-client';
+import { apiFetch } from '../utils/apiClient';
 
 export interface ReplyTo {
   sender: string;
@@ -72,11 +73,24 @@ export const useChatStore = create<ChatState>((set, get) => ({
       return;
     }
 
+    const token = localStorage.getItem('token'); // ← получаем токен
+
     const socket = io('http://localhost:3001', {
+      auth: {
+        token, // ← передаём токен здесь
+      },
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
       reconnectionAttempts: 5,
+    });
+
+    socket.on('connect_error', (err) => {
+      console.error('❌ Ошибка подключения Socket.IO:', err.message);
+      if (err.message.includes('Authentication')) {
+        console.log('Токен недействителен. Пожалуйста, войдите снова.');
+        // Можно вызвать logout
+      }
     });
 
     socket.on('receive_message', (message: any) => {
@@ -88,7 +102,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
   loadChats: async (userId: number) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/chat/${userId}`);
+      const response = await apiFetch(`http://localhost:3001/api/chat/${userId}`);
       const chats = await response.json();
 
       const formattedChats = chats.map((chat: any) => {
@@ -122,7 +136,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
   loadMessages: async (chatId: number) => {
     set({ isLoadingMessages: true }); // ← начало загрузки
     try {
-      const response = await fetch(`http://localhost:3001/api/chat/${chatId}/messages`);
+      const response = await apiFetch(`http://localhost:3001/api/chat/${chatId}/messages`);
       const messages = await response.json();
 
       const currentUserId = get().currentUserId;
@@ -153,7 +167,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
   loadUsers: async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/chat/users/all');
+      const response = await apiFetch('http://localhost:3001/api/chat/users/all');
       const users = await response.json();
       set({ users });
     } catch (error) {
@@ -189,28 +203,28 @@ export const useChatStore = create<ChatState>((set, get) => ({
       replyTo: message.replyTo || null,
       replyToId: message.replyToId || null,
     };
-  if (tempMessageIndex > -1) {
-    // Заменяем временное сообщение
-    set((state) => ({
-      messages: state.messages.map(m =>
-        m.id === message.id ? newMessage : m
-      )
-    }));
-  } else {
-    set((state) => ({
-      messages: [...state.messages, newMessage],
-      chats: state.chats.map((chat) =>
-        chat.id === message.chatId
-          ? {
-            ...chat,
-            lastMessage: message.content,
-            time: new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            unreadCount: isCurrentChat ? 0 : chat.unreadCount + 1,
-          }
-          : chat
-      ),
-    }));
-  }
+    if (tempMessageIndex > -1) {
+      // Заменяем временное сообщение
+      set((state) => ({
+        messages: state.messages.map(m =>
+          m.id === message.id ? newMessage : m
+        )
+      }));
+    } else {
+      set((state) => ({
+        messages: [...state.messages, newMessage],
+        chats: state.chats.map((chat) =>
+          chat.id === message.chatId
+            ? {
+              ...chat,
+              lastMessage: message.content,
+              time: new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              unreadCount: isCurrentChat ? 0 : chat.unreadCount + 1,
+            }
+            : chat
+        ),
+      }));
+    }
   },
 
   clearMessages: () => set({ messages: [] }),
@@ -230,9 +244,8 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
   createPrivateChat: async (userId1: number, userId2: number) => {
     try {
-      const response = await fetch('http://localhost:3001/api/chat/create-private', {
+      const response = await apiFetch('http://localhost:3001/api/chat/create-private', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId1, userId2 }),
       });
       const chat = await response.json();

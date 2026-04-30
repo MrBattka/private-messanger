@@ -6,18 +6,22 @@ import { Avatar, DropdownItem, DropdownMenu, Label, UserMiniAvatarContainer, Use
 import label from '../../../common/label1.jpeg';
 import { useAvatarUpload } from '../../../hooks/useAvatarUpload';
 import { useClickOutside } from '../../../hooks/useClickOutside';
+import Setting from '../../Setting/Setting';
+import { useSettingStore } from '../../../store/SettingStore';
 
 const UserMiniAvatar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const dropdownRef = useClickOutside<HTMLDivElement>(
-  isDropdownOpen,
-  () => setIsDropdownOpen(false),
-  [fileInputRef as React.RefObject<HTMLElement>]
-);
+    isDropdownOpen,
+    () => setIsDropdownOpen(false),
+    [fileInputRef as React.RefObject<HTMLElement>]
+  );
 
   const { logout, user, setUser } = useAuthStore();
+  const { toggle } = useSettingStore()
+
   const navigate = useNavigate();
 
   const { avatarUrl, handleFileChange, changeAvatar } = useAvatarUpload(
@@ -44,6 +48,11 @@ const UserMiniAvatar = () => {
     navigate('/login');
   };
 
+  const handleOpenSetting = () => {
+    toggle()
+    setIsDropdownOpen((prev) => !prev)
+  }
+
   return (
     <UserMiniAvatarContainer ref={dropdownRef}>
       <Avatar
@@ -55,9 +64,10 @@ const UserMiniAvatar = () => {
       <Label src={label} />
       {isDropdownOpen && (
         <DropdownMenu>
-          <DropdownItem onClick={() => changeAvatar(fileInputRef)}>Сменить аватар</DropdownItem>
+          <DropdownItem onClick={() => changeAvatar(fileInputRef)}>🧝🏽 Сменить аватар</DropdownItem>
+          <DropdownItem onClick={handleOpenSetting}>⚙️ Настройки</DropdownItem>
           <DropdownItem onClick={handleLogout} style={{ color: 'red' }}>
-            Выйти
+            ➜] Выйти
           </DropdownItem>
         </DropdownMenu>
       )}

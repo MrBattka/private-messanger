@@ -81,7 +81,7 @@ export const PlugSelectChat = styled.p`
   color: #7a6a8b;
 `;
 
-export const PlugNoMessage = styled.p`
+export const PlugNoMessage = styled.div`
   flex: 1;
   margin: 0;
   height: 100%;
