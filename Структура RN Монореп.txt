@@ -1,0 +1,13 @@
+private-messanger/
+├── apps/
+│   ├── web/             → твой текущий `front/` (React)
+│   ├── mobile/          → React Native + Expo
+│   └── server/          → твой `back/` (Node.js + Express)
+├── packages/
+│   ├── shared/          → общий код: типы, zod-схемы, утилиты
+│   ├── api-client/      → клиент для API и Socket.IO
+│   └── ui/              → общие компоненты (опционально)
+├── turbo.json           → конфиг Turborepo
+├── pnpm-workspace.yaml  → конфиг pnpm
+├── package.json         → корневой (scripts, devDependencies)
+└── tsconfig.base.json   → общий tsconfig

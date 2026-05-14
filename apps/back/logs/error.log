@@ -1,0 +1,438 @@
+2026-05-07 13:30:42 [31merror[39m: PrismaClientInitializationError: 
+Invalid `prisma.chat.findMany()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:35:43
+
+  32 validateUserId(userId)
+  33   .then(async () => {
+  34     try {
+→ 35       const chats = await prisma.chat.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7615)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:35:25
+2026-05-07 13:30:42 [31merror[39m: PrismaClientInitializationError: 
+Invalid `prisma.user.findMany()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:14:39
+
+  11 // 🔹 Получить всех пользователей
+  12 router.get('/users/all', async (_req, res) => {
+  13   try {
+→ 14     const users = await prisma.user.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7615)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:14:21
+2026-05-11 12:40:27 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 12:40:53 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 12:46:37 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 12:46:40 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 12:46:56 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 12:47:09 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:45:20 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:45:32 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:45:50 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:47:03 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:51:22 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:51:23 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:52:13 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:52:15 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:52:15 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:52:17 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:53:25 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:53:47 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 13:58:13 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 14:00:20 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 14:01:22 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 14:01:32 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 14:02:06 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 14:02:13 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 14:02:13 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 14:02:15 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 14:02:16 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.update()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:31
+
+  196 }
+  197 
+  198 try {
+→ 199   await prisma.chatMember.update(
+An operation failed because it depends on one or more records that were required but not found. Record to update not found.
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:199:7
+2026-05-11 14:04:19 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.upsert()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:200:31
+
+  197 
+  198 try {
+  199   // Используем upsert: найдём или создадим ChatMember
+→ 200   await prisma.chatMember.upsert(
+Foreign key constraint violated: `(not available)`
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:200:7
+2026-05-11 14:04:23 [31merror[39m: PrismaClientKnownRequestError: 
+Invalid `prisma.chatMember.upsert()` invocation in
+C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:200:31
+
+  197 
+  198 try {
+  199   // Используем upsert: найдём или создадим ChatMember
+→ 200   await prisma.chatMember.upsert(
+Foreign key constraint violated: `(not available)`
+    at $n.handleRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async C:\Users\mobil\Desktop\Price-Scripts\private-messanger\back\src\routes\chat.ts:200:7

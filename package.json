@@ -1,0 +1,33 @@
+{
+  "name": "private-messanger",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrBattka/private-messanger.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MrBattka/private-messanger/issues"
+  },
+  "homepage": "https://github.com/MrBattka/private-messanger#readme",
+  "dependencies": {
+    "socket.io-client": "^4.8.3"
+  }
+}
